@@ -1,0 +1,41 @@
+extends ../../layouts/default.pug
+
+block head 
+    link(rel="stylesheet", href='/admin/css/pageProducts.css')
+block main
+    .card.mb-3
+        .card-header Sản phẩm đã xóa
+        .card-body
+            if deletedProducts && deletedProducts.length
+                table.table.table-hover.table-sm
+                    thead
+                        tr
+                            th STT 
+                            th Hình ảnh 
+                            th Tiêu đề
+                            th Giá 
+                            th Hành động
+                    tbody
+                        each item, index in deletedProducts 
+                            tr
+                                td #{index + 1}
+                                td
+                                    img(src=item.thumbnail alt=item.title width='150px')
+                                td #{item.title}
+                                td #{item.price} USD
+                                td
+                                    button(
+                                             class='btn btn-success btn-sm ml-1'
+                                             data-id = item.id
+                                             button-restore-item
+                                        ) Khôi phục
+            else
+               p Không có sản phẩm nào đã xóa.
+            form(
+                action="", 
+                method="POST", 
+                id="form-restore-item",
+                data-path=`${prefixAdmin}/products/trash/restore`
+            ) 
+    script(src="/admin/js/product.js") 
+    script(src="/admin/js/script.js") 

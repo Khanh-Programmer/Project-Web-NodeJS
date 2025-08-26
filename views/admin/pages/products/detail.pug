@@ -1,0 +1,46 @@
+extend ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block head 
+     link(rel="stylesheet", href="/admin/css/pageAddNewProduct.css")
+block main 
+     +alert-error(5000)
+     +alert-success(5000)
+     .container 
+          h1 Chi tiết sản phẩm
+          .card.mb-3
+               .card-header Thông tin sản phẩm
+               .card-body  
+                    .row
+                         .col-md-4 
+                              img(
+                                   src=product.thumbnail 
+                                   alt=product.title 
+                                   class='img-fluid'
+                              ) 
+                         .col-md-8
+                              p 
+                                   strong Tên sản phẩm : 
+                                   |  #{product.title}
+                              p 
+                                   strong Mô tả:
+                                   |  #{product.description}
+                              p 
+                                   strong Giá: 
+                                   |  #{product.price} USD
+                              p 
+                                   strong Giảm giá: 
+                                   |  #{product.discountPercentage}%
+                              p 
+                                   strong Số lượng: 
+                                   |  #{product.stock}
+                              p 
+                                   strong Trạng thái: 
+                                   if product.status === 'active'
+                                        span.badge.badge-success Hoạt động
+                                   else 
+                                        span.badge.badge-danger Dừng hoạt động
+          a(
+               href=`${prefixAdmin}/products`
+               class="btn btn-primary mt-3"
+               ) Quay lại danh sách sản phẩm

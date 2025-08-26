@@ -1,0 +1,59 @@
+extends ../../layouts/default.pug  
+
+block head
+    link(rel="stylesheet", href="/admin/css/pageOverview.css") 
+
+block main
+    .container
+        header
+            .header-content
+                .logo TechStore
+                nav
+                    ul
+                        li
+                            a(href="#home") Trang chủ
+                        li
+                            a(href="#products") Sản phẩm
+                        li
+                            a(href="#about") Về chúng tôi
+                        li
+                            a(href="#contact") Liên hệ
+
+        section.hero
+            h1 Khám Phá Công Nghệ Tương Lai
+            p Chúng tôi mang đến những sản phẩm công nghệ tiên tiến nhất với chất lượng vượt trội và giá cả cạnh tranh
+
+        section.products-grid
+            if products && products.length
+                each product in products
+                    .product-card
+                        img(src=product.thumbnail, alt=product.title)
+                        h3 #{product.title}
+                        p #{product.description}
+                        .price #{product.price} USD
+                        button.btn Xem chi tiết
+            else
+                p Không có sản phẩm nào.
+
+        section.features
+            h2 Tại Sao Chọn Chúng Tôi?
+            .features-grid
+                .feature-item
+                    .feature-icon 🚚
+                    h3 Giao Hàng Nhanh
+                    p Giao hàng miễn phí toàn quốc trong 24h với đơn hàng trên 500k
+                .feature-item
+                    .feature-icon 🛡️
+                    h3 Bảo Hành Toàn Diện
+                    p Bảo hành chính hãng, hỗ trợ 24/7 và đổi trả trong 30 ngày
+                .feature-item
+                    .feature-icon 💎
+                    h3 Chất Lượng Cao
+                    p 100% sản phẩm chính hãng, được kiểm định nghiêm ngặt
+                .feature-item
+                    .feature-icon 💰
+                    h3 Giá Tốt Nhất
+                    p Cam kết giá cạnh tranh nhất thị trường và nhiều ưu đãi hấp dẫn
+
+        footer
+            p © 2024 TechStore. Tất cả quyền được bảo lưu. | Hotline: 1900-1234 | Email: info@techstore.vn
