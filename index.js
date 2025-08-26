@@ -13,7 +13,7 @@ const routeClients = require("./routes/clients/index.route");
 const routeAdmin = require("./routes/admin/index.route");
 
 const app = express();
-const port = process.env.PORT || 3000; // fallback khi PORT không có
+const port = process.env.PORT; // fallback khi PORT không có
 
 // Method Override
 app.use(methodOverride('_method'));
