@@ -19,7 +19,7 @@ const port = process.env.PORT; // fallback khi PORT không có
 app.use(methodOverride('_method'));
 
 // Parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Views
 app.set("views", `${__dirname}/views`);
@@ -31,9 +31,6 @@ app.use(express.static(`${__dirname}/public`));
 // Flash & Session
 app.use(cookieParser('khanhuet'));
 app.use(session({
-    secret: 'khanhuet', 
-    resave: false, 
-    saveUninitialized: true, 
     cookie: { maxAge: 60000 }
 }));
 app.use(flash());
