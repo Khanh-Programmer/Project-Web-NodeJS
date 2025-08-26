@@ -48,6 +48,7 @@ database.connect();
 routeClients(app);
 routeAdmin(app);
 
+module.exports = app;
 // Start server
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);
