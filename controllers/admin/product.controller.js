@@ -40,9 +40,19 @@ module.exports.index = async (req, res) => {
           countProducts
      );
      // End-Pagination
-
+     
+     // sort 
+     let sort = {}; 
+     if (req.query.sortKey && req.query.sortValue) {
+          sort[req.query.sortKey] = req.query.sortValue
+     }
+     
+     // end-sort 
      // Lấy data :
-     const products = await product.find(find).limit(objectPagination.limitItem).skip(objectPagination.skipItem).sort({ position: "desc" });
+     const products = await product.find(find)
+          .limit(objectPagination.limitItem)
+          .skip(objectPagination.skipItem) 
+          .sort(sort);
      // console.log(products); Check xem lấy được data từ database ra hay chưa ???
      
      const deletedProducts = await product.find({ deleted: true });
@@ -176,7 +186,7 @@ module.exports.createPost = async (req, res) => {
      } else {
           req.body.position = parseInt(req.body.position);
      } 
-     req.body.thumbnail = `/uploads/${req.file.filename}`;
+     // req.body.thumbnail = `/uploads/${req.file.filename}`; // local 
 
      // Save product to database
      const newProduct = new product(req.body);

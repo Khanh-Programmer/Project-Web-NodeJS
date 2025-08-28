@@ -11,15 +11,18 @@ html
         //- ở đây có 2 cách viết có thể dán link luôn hai là dùng block head 
 
     body
-     include ../partials/header.pug
-     .body
-          include ../partials/sidebar.pug
-          .main 
-               block main
+        include ../partials/header.pug
+        .body
+            include ../partials/sidebar.pug
+            .main 
+                block main
 
-     script(src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous")
-     script(src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous")   
-     script(src="/admin/js/script.js") 
+    script(src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous")
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous") 
 
+    <script src="https://cdn.tiny.cloud/1/pv83x2v4w41r047f7bi8vs05jdxinszeuo7ogd1kufa2ando/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+    script(src="/admin/js/tinymceConfig.js") 
+    script(src="/admin/js/script.js" type='module') 
 
        

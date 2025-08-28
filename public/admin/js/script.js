@@ -167,22 +167,57 @@ const uploadImagePreview = document.querySelector('[upload-image-preview]');
 const buttonDeleteImage = document.querySelector('.remove-image');
 
 // Hiển thị ảnh và nút X khi chọn file
-imageInput.addEventListener('change', () => {
-    if (imageInput.files && imageInput.files[0]) {
-        uploadImagePreview.src = URL.createObjectURL(imageInput.files[0]);
-        buttonDeleteImage.style.display = "inline-block";
-    }
-});
+if (imageInput && uploadImagePreview && buttonDeleteImage) {
+     imageInput.addEventListener('change', () => {
+          if (imageInput.files && imageInput.files[0]) {
+               uploadImagePreview.src = URL.createObjectURL(imageInput.files[0]);
+               buttonDeleteImage.style.display = "inline-block";
+          }
+     });
 
-// Xóa ảnh khi bấm nút X
-if (buttonDeleteImage) {
-    buttonDeleteImage.addEventListener('click', () => {
-        const checkConfirm = confirm("Bạn có chắc chắn muốn xóa hình ảnh này không?");
-        if (checkConfirm) {
-            imageInput.value = ""; // reset input
-            uploadImagePreview.src = ""; // xóa ảnh hiển thị
-            buttonDeleteImage.style.display = "none"; // ẩn nút X
-        }
-    });
+     buttonDeleteImage.addEventListener('click', () => {
+          const checkConfirm = confirm("Bạn có chắc chắn muốn xóa hình ảnh này không?");
+          if (checkConfirm) {
+               imageInput.value = "";
+               uploadImagePreview.src = "";
+               buttonDeleteImage.style.display = "none";
+          }
+     });
 }
+
 // End-remove-image
+
+// Sort
+const sort = document.querySelector("[sort]");
+if (sort) {
+     const sortSelect = sort.querySelector("[sort-select]");
+     const sortClear = sort.querySelector("[sort-clear]");
+
+     let url = new URL(window.location.href);
+     sortSelect.addEventListener('change', (e) => {
+          const value = e.target.value;
+          // console.log(sortValue);
+          const [sortKey, sortValue] = value.split("-");
+          // console.log(sortKey);
+          // console.log(sortValue);
+          url.searchParams.set("sortKey", sortKey);
+          url.searchParams.set("sortValue", sortValue);
+          window.location.href = url.href; // Chuyển hướng đến URL mới với tham số sortKey và sortValue
+     });
+
+     sortClear.addEventListener('click', (e) => {
+          url.searchParams.delete("sortKey");
+          url.searchParams.delete("sortValue");
+          window.location.href = url.href; // Chuyển hướng đến URL mới với tham số sortKey và sortValue
+     });
+
+     const sortKey = url.searchParams.get("sortKey");
+     const sortValue = url.searchParams.get("sortValue");
+     if (sortKey && sortValue) {
+          const stringSort = `${sortKey}-${sortValue}`;
+          const optionSelect = sortSelect.querySelector(`option[value='${stringSort}']`);
+          optionSelect.selected = true;
+     }
+}
+
+// End-Sort

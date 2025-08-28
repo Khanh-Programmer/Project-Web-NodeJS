@@ -1,5 +1,6 @@
 //- Nhúng layouts
 extends ../../layouts/default.pug
+
 //- Nhúng mixins 
 include ../../mixins/filterStatus.pug 
 include ../../mixins/searchProduct.pug
@@ -10,34 +11,19 @@ include ../../mixins/sort.pug
 
 block head 
      link(rel="stylesheet", href="/admin/css/pageProducts.css")
+
 block main
-     +alert-success(5000)
-     .card.mb-3
-          .card-header Bộ lọc và tìm kiếm 
-          .card-body  
-               .row
-                    .col-6
-                         +filter-status(filterStatus)
-                    .col-6  
-                         +search-product(searchProduct)
      .card.mb-3 
-          .card-header Sắp xếp 
-          .card-body 
-               .row
-                    .col-4 
-                         +sort(sanPham)
-          .card.mb-3 
-               .card-header Danh sách sản phẩm
-                    .card-body  
-                         .row
-                              .col-8 
-                                   +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)  
-                              .col-4 
-                                   a(
-                                        href=`${prefixAdmin}/products/create`
-                                        class="btn btn-outline-success"
-                                        ) Thêm sản phẩm
-                    table(
+          .card-header Danh mục sản phẩm
+               .card-body  
+                    .row
+                         .col-8 
+                         .col-4 
+                              a(
+                                   href=`${prefixAdmin}/products-category/create`
+                                   class="btn btn-outline-success"
+                              ) Thêm danh mục sản phẩm 
+               table(
                          class="table table-hover table-sm"
                          checkbox-multi
                     )
@@ -48,12 +34,11 @@ block main
                                    th STT 
                                    th Hình ảnh 
                                    th Tiêu đề
-                                   th Giá  
                                    th Vị trí 
                                    th Trạng thái 
-                                   th Hành động 
+                                   th Hành động
                          tbody 
-                              each item, index in products 
+                              each item, index in productsCategory
                                    tr
                                         td 
                                              input(
@@ -70,13 +55,11 @@ block main
                                              height='auto'  
                                              ) 
                                         td #{item.title}
-                                        td #{item.price} USD  
                                         td 
                                              input(
                                                   type='number',
                                                   value=item.position, 
                                                   style='width: 60px; text-align: center; border: 1px solid #ccc; border-radius: 4px; background-color: #f8f9fa;',
-
                                                   min='1',
                                                   name='position'
                                              )
@@ -98,31 +81,15 @@ block main
                                         td 
                                              a(
                                                   class='btn btn-info' 
-                                                  href=`${prefixAdmin}/products/detail/${item.id}`
+                                                  href=`${prefixAdmin}/products-category/detail/${item.id}`
                                                   ) Xem chi tiết
                                              a(
                                                   class='btn btn-warning btn-sm'
-                                                  href=`${prefixAdmin}/products/edit/${item.id}`
+                                                  href=`${prefixAdmin}/products-category/edit/${item.id}`
                                                   ) Chỉnh sửa
                                              button(
                                                   class='btn btn-danger btn-sm ml-1'
                                                   data-id = item.id
                                                   button-delete-item
                                                   ) Xóa  
-     +page-split(page)  
-
-     form(
-          action="", 
-          method="POST", 
-          id="form-change-status",
-          data-path=`${prefixAdmin}/products/change-status`
-     )
-     
-     form(
-          action="", 
-          method="POST", 
-          id="form-delete-item",
-          data-path=`${prefixAdmin}/products/delete`
-     ) 
-
-     script(src="/admin/js/product.js") 
+     script(src="/admin/js/product.js")

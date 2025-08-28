@@ -24,11 +24,12 @@ block main
                                 td #{item.title}
                                 td #{item.price} USD
                                 td
-                                    button(
-                                             class='btn btn-success btn-sm ml-1'
-                                             data-id = item.id
-                                             button-restore-item
-                                        ) Khôi phục
+                                    button( 
+                                        href=`${prefixAdmin}/products`
+                                        class='btn btn-success btn-sm ml-1'
+                                        data-id=item.id
+                                        button-restore-item
+                                    ) Khôi phục
             else
                p Không có sản phẩm nào đã xóa.
             form(
