@@ -1,20 +1,22 @@
+require('dotenv').config();
+
 const express = require("express");
 const methodOverride = require('method-override');
-const multer = require('multer'); 
 const path = require('path');
 const bodyParser = require('body-parser'); 
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const flash = require('express-flash');
-require('dotenv').config();
-const systemConfig = require("./config/system.js");
 
+const systemConfig = require("./config/system.js");
 const database = require("./config/database");
 const routeClients = require("./routes/clients/index.route");
 const routeAdmin = require("./routes/admin/index.route");
 
 const app = express();
 const port = process.env.PORT; // fallback khi PORT không có
+
+require('dotenv').config();
 
 // Method Override
 app.use(methodOverride('_method'));
@@ -50,11 +52,13 @@ database.connect();
 routeClients(app);
 routeAdmin(app);
 
-module.exports = app;
+
 // Start server
-app.listen(port, () => {
-    console.log(`App listening on port ${port}`);
-    console.log(`http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//     console.log(`App listening on port ${port}`);
+//     console.log(`http://localhost:${port}`);
+// });
+
+module.exports = app;
 
 

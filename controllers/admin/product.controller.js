@@ -109,7 +109,7 @@ module.exports.changeStatusMulti = async (req, res) => {
                     {
                          deleted: true,
                          deleteAt: new Date()
-                     }
+                    }
                );
                req.flash('success', `Xóa ${ids.length} sản phẩm thành công!`); // Thông báo thành công
                break;
