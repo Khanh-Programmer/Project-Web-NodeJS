@@ -7,65 +7,68 @@ const paginationHelper = require("../../helpers/pageSplit");
 const configSystem = require("../../config/system.js") 
 
 module.exports.index = async (req, res) => {  
+     try {
+          // Bộ lọc sản phẩm : 
+          const filterStatus = filterStatusHelper(req.query);
 
-     // Bộ lọc sản phẩm : 
-     const filterStatus = filterStatusHelper(req.query);
+          // Lọc sản phẩm theo deleted : 
+          let find = {
+               deleted: false
+          }
 
-     // Lọc sản phẩm theo deleted : 
-     let find = {
-          deleted: false
-     }  
+          // Theo trạng thái hoạt động của sản phẩm:
+          if (req.query.status) {
+               find.status = req.query.status;
+          }
 
-     // Theo trạng thái hoạt động của sản phẩm:
-     if(req.query.status) {
-          find.status = req.query.status; 
-     }
+          // Product search function : 
+          const objectSearch = searchProductHelper(req.query);
 
-     // Product search function : 
-     const objectSearch = searchProductHelper(req.query);
+          // console.log(objectSearch.regex); // Check xem có lấy được keyword hay không ???
+          if (objectSearch.regex) {
+               find.title = objectSearch.regex;
+          }
 
-     // console.log(objectSearch.regex); // Check xem có lấy được keyword hay không ???
-     if(objectSearch.regex) {
-          find.title = objectSearch.regex;
-     }
-
-     // Pagination  
-     const countProducts = await product.countDocuments(find);
-     let objectPagination = paginationHelper(
-          {
-          currentPage: 1,
-          limitItem: 4
-          },
-          req.query,
-          countProducts
-     );
-     // End-Pagination
-     
-     // sort 
-     let sort = {}; 
-     if (req.query.sortKey && req.query.sortValue) {
-          sort[req.query.sortKey] = req.query.sortValue
-     }
-     
-     // end-sort 
-     // Lấy data :
-     const products = await product.find(find)
-          .limit(objectPagination.limitItem)
-          .skip(objectPagination.skipItem) 
-          .sort(sort);
-     // console.log(products); Check xem lấy được data từ database ra hay chưa ???
-     
-     const deletedProducts = await product.find({ deleted: true });
-
-     // Vẽ ra giao diện : 
-     res.render("admin/pages/products/index.pug", {
-          pageTitle:"Trang quản trị",
-          products: products,
-          filterStatus: filterStatus,
-          keyword: objectSearch.keyword,
-          pagination: objectPagination,
-          deletedProducts
-     });
+          // Pagination  
+          const countProducts = await product.countDocuments(find);
+          let objectPagination = paginationHelper(
+               {
+                    currentPage: 1,
+                    limitItem: 4
+               },
+               req.query,
+               countProducts
+          );
+          // End-Pagination
+          
+          // sort 
+          let sort = {};
+          if (req.query.sortKey && req.query.sortValue) {
+               sort[req.query.sortKey] = req.query.sortValue
+          }
+          
+          // end-sort 
+          // Lấy data :
+          const products = await product.find(find)
+               .limit(objectPagination.limitItem)
+               .skip(objectPagination.skipItem)
+               .sort(sort);
+          // console.log(products); Check xem lấy được data từ database ra hay chưa ???
+          
+          const deletedProducts = await product.find({ deleted: true });
+          // Vẽ ra giao diện : 
+          res.render("admin/pages/products/index", {
+               pageTitle:"Trang quản trị",
+               products: products,
+               filterStatus: filterStatus,
+               keyword: objectSearch.keyword,
+               pagination: objectPagination,
+               deletedProducts
+          });
+     } catch (error) {  
+          console.error("ERROR in /admin/products:", error);
+          res.status(500).send("Internal Server Error: " + error.message);
+  }
 };
 
 // [GET] /admin/products/change-status/:status/:id

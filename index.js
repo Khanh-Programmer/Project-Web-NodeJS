@@ -54,10 +54,10 @@ routeAdmin(app);
 
 
 // Start server
-// app.listen(port, () => {
-//     console.log(`App listening on port ${port}`);
-//     console.log(`http://localhost:${port}`);
-// });
+app.listen(port, () => {
+    console.log(`App listening on port ${port}`);
+    console.log(`http://localhost:${port}`);
+});
 
 module.exports = app;
 
